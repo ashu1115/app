@@ -13,7 +13,7 @@ function Checkout() {
     const [{basket}, dispatch] = useStateValue();
     const [{orders}] = useStateValue();
     const history = useHistory();
-    let {booking_date,booking_time} = useParams();
+    let {booking_date,booking_time,store_id} = useParams();
 
     if (basket.length===0) {
         history.push("/")
@@ -24,7 +24,7 @@ function Checkout() {
     const date_time = new Date()
    const [details,setDetails] =useState({})
     console.log(basket)
-    let fetchUrl = "http://bookings.ap-southeast-1.elasticbeanstalk.com/store/web/details/store_8719096127127"
+    let fetchUrl = `http://bookings.ap-southeast-1.elasticbeanstalk.com/store/web/details/${store_id}`
     useEffect(()=>{
         
       async function fetchData(){
@@ -83,7 +83,7 @@ function Checkout() {
                 })
             }
 
-                axios.post('http://bookings.ap-southeast-1.elasticbeanstalk.com/store/add_booking/store_8719096127127', {
+                axios.post(`http://bookings.ap-southeast-1.elasticbeanstalk.com/store/add_booking/${store_id}`, {
                     
                     "bookingRecordTime": "2020-11-23T17:10:42.337676",
                     "bookingStartTime": "2020-11-27T13:00:00.337676",

@@ -3,7 +3,7 @@ import Product from '../components/Product'
 import "../css/Store.css"
 import { useStateValue } from '../StateProvider';
 import {getBasketTotal,getTotalDuration} from '../reducer'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import image2 from "./logo2.png"
 import axios from "../axios"
 
@@ -13,6 +13,7 @@ function Store() {
     var totalDuration = getTotalDuration(basket);
     var date = new Date()
     console.log(totalDuration);
+    let {store_id} = useParams();
 
     var [details, setDetails] = useState({});
     
@@ -26,7 +27,7 @@ function Store() {
 
     const [checkAvailabilty,setCheckAvailability]=useState(current_time)
 
-    var fetchUrl = "http://bookings.ap-southeast-1.elasticbeanstalk.com/store/web/details/store_8719096127127"
+    var fetchUrl = `http://bookings.ap-southeast-1.elasticbeanstalk.com/store/web/details/${store_id}`
     
     useEffect(()=>{
         
@@ -42,36 +43,36 @@ function Store() {
             data: request.data,
         })
         console.log(request.data);
-        if(request.data){ 
+        // if(request.data){ 
 
-            if(request.data.bookedSlots)
-            {
-                console.log("&^%#@@@#%%0",request.data && request.data.bookedSlots);
+        //     if(request.data.bookedSlots)
+        //     {
+        //         console.log("&^%#@@@#%%0",request.data && request.data.bookedSlots);
                
-                if(request.data.bookedSlots[currentDate]){
+        //         if(request.data.bookedSlots[currentDate]){
                     
-                    const x=request.data.storeTimings['2020-12-02']
-                    console.log("KKKKKKKK",x);
-                    request.data.bookedSlots[currentDate].map(item=>{
-                        console.log(item.openTime," && " ,item.closeTime)
-                        if(checkAvailabilty>=item.openTime && checkAvailabilty <=item.closeTime){
-                            // opening=item.closeTime
-                           console.log("ho ja na * ",checkAvailabilty)
-                           if(checkAvailabilty>=x[0].closeTime && checkAvailabilty<=x[1].openTime)
-                           {
-                               setCheckAvailability(x[1].closeTime)
-                           }
-                           else{
-                            setCheckAvailability(item.closeTime)
-                           }
+        //             const x=request.data.storeTimings['2020-12-02']
+        //             console.log("KKKKKKKK",x);
+        //             request.data.bookedSlots[currentDate].map(item=>{
+        //                 console.log(item.openTime," && " ,item.closeTime)
+        //                 if(checkAvailabilty>=item.openTime && checkAvailabilty <=item.closeTime){
+        //                     // opening=item.closeTime
+        //                    console.log("ho ja na * ",checkAvailabilty)
+        //                    if(checkAvailabilty>=x[0].closeTime && checkAvailabilty<=x[1].openTime)
+        //                    {
+        //                        setCheckAvailability(x[1].closeTime)
+        //                    }
+        //                    else{
+        //                     setCheckAvailability(item.closeTime)
+        //                    }
                            
-                        }
-                  })
+        //                 }
+        //           })
     
     
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
    
   
         return request;  
@@ -156,15 +157,15 @@ function Store() {
 <div className="orders">
     <div className="line123">
     <p style={{fontSize:"18px",marginLeft:"15px"}}>Orders : {basket.length} Items  -  <i className="fas fa-rupee-sign"></i> {total}</p>
-    <div className="right" style={{  color:"#51ff45",marginRight:"15px"}}>
-        {status}
+    <div className="right" style={{  color:"#51ff45",marginRight:"15px"}}>/
+        {/* {status} */}
         
         </div>
     </div>
 
 <div className="foot">
-<Link to="/later"  style={{textDecoration:"none",color:"white",flexBasis:"1"}} className="nes"> Book Later</Link>
-    <Link to={`/checkout/${currentDate}/${status}`} style={{textDecoration:"none",color:"white"}} className="nes"> Book Now</Link>
+<Link to={`/later/${store_id}`}  style={{textDecoration:"none",color:"white",flexBasis:"1"}} className="nes"> Next</Link>
+    {/* <Link to={`/checkout/${currentDate}/${status}`} style={{textDecoration:"none",color:"white"}} className="nes"> Book Now</Link> */}
 
 </div>
 </div>

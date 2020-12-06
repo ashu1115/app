@@ -1,6 +1,8 @@
 import React, {useState,useEffect} from 'react'
 import axios from "../axios"
 import '../css/Home.css'
+
+import { useParams } from "react-router";
 import timeSlotter from "time-slotter"
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
@@ -11,8 +13,13 @@ function Home() {
  let [{storedetails,basket}] = useStateValue()
  let [booking_date ,setBookingDate] = useState("")
  var totalDuration = getTotalDuration(basket);
- 
+ let {store_id} = useParams();
  let [arr,setArr] = useState([]);
+ let bct=false;
+ let bcd=false;
+
+  
+  
 
 
 
@@ -54,6 +61,16 @@ function Home() {
   let dates = getDaysInMonth(d.getMonth(),d.getFullYear)
 
 
+  let handleclick = (e)=> {
+    setTime(e.target.id);
+    bct = !bct
+    e.target.className = bct ? " book_timings" : "book_timings selected"
+ 
+}
+
+
+
+
 
 
 
@@ -68,7 +85,11 @@ function Home() {
                 dates.map((item) => (
                   <div >
 
-                <label  className="date_button"  id={formatDate(item)}  onClick={(e)=>{setBookingDate(e.target.id); 
+                <label  className="date_button"  id={formatDate(item)}  onClick={(e)=>{setBookingDate(e.target.id);
+                     bcd = !bcd
+                     e.target.className = ! bcd ? "date_button" : "date_button selected"
+                   
+                             
                    let temp =[]
                   for (let i=0;i<=1;i++){
                     timeSlotter(storedetails.storeTimings[e.target.id][i].openTime,storedetails.storeTimings[e.target.id][i].closeTime, totalDuration).map(t=>(temp.push(t[0]+" - "+t[1])))
@@ -76,10 +97,10 @@ function Home() {
                   }
 
 
-                                    
+                         
                     let arr2=[]
                 
-                      console.log(storedetails.bookedSlots[e.target.id].length)
+                      // console.log(storedetails.bookedSlots[e.target.id].length)
                     
                     temp.map(item=>{
                       const data=item.split(' - ');
@@ -133,7 +154,7 @@ function Home() {
               {
                  booking_date ?
                arr.map(t =>(
-                 <div className="book_timings" id={t} onClick={(e)=>{setTime(e.target.id); console.log(e.target.id)}}>
+                 <div className="book_timings" id={t} onClick={handleclick}>
                   {t}
                  </div>
                )) : " "
@@ -148,7 +169,7 @@ function Home() {
 <div className="confirm_order">
 
   
-<Link to={`/checkout/${booking_date}/${booking_time}`} className="next" style={{textDecoration:"none",color:"white"}}  >Next</Link>
+<Link to={`/checkout/${booking_date}/${booking_time}/${store_id}`} className="next" style={{textDecoration:"none",color:"white"}}  >Next</Link>
 </div></div>
          }
             

@@ -21,7 +21,7 @@ function App() {
     <Router>
        <div className="app">
         <Switch>
-         <Route path="/checkout/:booking_date/:booking_time">
+         <Route path="/checkout/:booking_date/:booking_time/:store_id">
            <Header title="Booking Details"/>
             <Checkout />
          
@@ -33,27 +33,28 @@ function App() {
          
          </Route>
 
+         <Route path="/store/:store_id">
       
-         <Route path="/landing">
+          <Store />
+         </Route>
+
+
+         <Route path="/later/:store_id">
+           <Header title="Booking Date And Time" />
+           <Home />
+         
+         </Route>
+      
+         <Route path="/">
         
         <Landing_page />
     
      
      </Route>
   
-         <Route path="/later">
-           <Header title="Booking Date And Time" />
-           <Home />
-         
-         </Route>
 
          
       
-         <Route path="/">
-      
-          <Store />
-         </Route>
-
      
         </Switch>
        </div>

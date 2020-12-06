@@ -118,6 +118,11 @@ background: #00FF00;
     
     
 }
+.selected{
+    background-color:#a3f531;
+    color:white;
+    border:none;
+}
 
 .see_all{
     float:right;
