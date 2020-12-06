@@ -1,0 +1,18 @@
+
+
+  
+  .count_items{
+  
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    width:80px;
+
+    background: #FFFFFF;
+border: 1px solid #000000;
+box-sizing: border-box;
+border-radius: 10px;
+  }
+  
+
+  
